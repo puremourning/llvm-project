@@ -108,6 +108,23 @@ R"cpp(
   // clang-format on
 }
 
+TEST_F(CommentTextTest, EmptyCommentsParseOK) {
+  // clang-format off
+  auto ExpectedOutput = R"()";
+  auto Formatted = formatComment(R"cpp(/***/)cpp");
+  EXPECT_EQ(ExpectedOutput, Formatted);
+  Formatted = formatComment(R"cpp(
+  /**
+   */)cpp");
+  EXPECT_EQ(ExpectedOutput, Formatted);
+  Formatted = formatComment(R"cpp( /** */)cpp");
+  EXPECT_EQ(ExpectedOutput, Formatted);
+  Formatted = formatComment(R"cpp(
+     /***/
+  )cpp");
+  EXPECT_EQ(ExpectedOutput, Formatted);
+}
+
 TEST_F(CommentTextTest, KeepsDoxygenControlSeqs) {
   // clang-format off
   auto ExpectedOutput =
