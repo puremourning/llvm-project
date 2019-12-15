@@ -1,0 +1,3 @@
+[submodule "lldb-mi"]
+	path = lldb-mi
+	url = https://github.com/lldb-tools/lldb-mi
