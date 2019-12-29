@@ -562,7 +562,7 @@ class DebugCommunication(object):
                        disableSTDIO=False, shellExpandArguments=False,
                        trace=False, initCommands=None, preRunCommands=None,
                        stopCommands=None, exitCommands=None, sourcePath=None,
-                       debuggerRoot=None, launchCommands=None):
+                       debuggerRoot=None, launchCommands=None, **kwargs):
         args_dict = {
             'program': program
         }
@@ -597,6 +597,8 @@ class DebugCommunication(object):
             args_dict['debuggerRoot'] = debuggerRoot
         if launchCommands:
             args_dict['launchCommands'] = launchCommands
+        args_dict.update(kwargs)
+
         command_dict = {
             'command': 'launch',
             'type': 'request',

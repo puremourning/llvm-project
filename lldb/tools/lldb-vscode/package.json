@@ -89,6 +89,11 @@
 								"description": "Automatically stop after launch.",
 								"default": false
 							},
+							"externalConsole": {
+								"type": "boolean",
+								"description": "Launch the program in a new terminal",
+								"default": false
+							},
 							"disableASLR": {
 								"type": "boolean",
 								"description": "Enable or disable Address space layout randomization if the debugger supports it.",

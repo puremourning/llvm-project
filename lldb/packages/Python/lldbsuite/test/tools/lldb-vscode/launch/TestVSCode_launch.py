@@ -17,7 +17,6 @@ class TestVSCode_launch(lldbvscode_testcase.VSCodeTestCaseBase):
     mydir = TestBase.compute_mydir(__file__)
 
     @skipIfWindows
-    @skipIfDarwin # Flaky
     def test_default(self):
         '''
             Tests the default launch of a simple program. No arguments,
@@ -52,6 +51,19 @@ class TestVSCode_launch(lldbvscode_testcase.VSCodeTestCaseBase):
                     self.assertTrue(
                         reason != 'breakpoint',
                         'verify stop isn\'t "main" breakpoint')
+
+    @skipIfWindows
+    def test_externalConsole(self):
+        '''
+            Tests the default launch of a simple program that launches in a
+            new TTY.
+        '''
+        program = self.getBuildArtifact("a.out")
+        self.build_and_launch(program, externalConsole=True)
+        self.continue_to_exit()
+        # Now get the STDOUT and verify we connected it to another TTY
+        output = self.get_stdout()
+        self.assertEqual(output, None, "Program output goes TTY")
 
     @skipIfWindows
     def test_cwd(self):

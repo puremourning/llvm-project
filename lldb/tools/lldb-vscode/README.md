@@ -88,6 +88,7 @@ file that defines how your program will be run. The JSON configuration file can 
 |**exitCommands**   |[string]| | LLDB commands executed when the program exits. Commands and command output will be sent to the debugger console when they are executed.
 |**sourceMap**      |[string[2]]| | Specify an array of path re-mappings. Each element in the array must be a two element array containing a source and destination pathname.
 |**debuggerRoot**   | string| |Specify a working directory to use when launching lldb-vscode. If the debug information in your executable contains relative paths, this option can be used so that `lldb-vscode` can find source files and object files that have relative paths.
+| **externalConsole** |boolean| | Set to TRUE to start the application in a new terminal. Useful for testing console applications.
 
 ## Attaching Settings
 

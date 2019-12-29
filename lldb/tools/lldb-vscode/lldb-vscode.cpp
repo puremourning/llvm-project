@@ -1395,6 +1395,8 @@ void request_launch(const llvm::json::Object &request) {
     flags |= lldb::eLaunchFlagDisableSTDIO;
   if (GetBoolean(arguments, "shellExpandArguments", false))
     flags |= lldb::eLaunchFlagShellExpandArguments;
+  if (GetBoolean(arguments, "externalConsole", false ))
+    flags |= lldb::eLaunchFlagLaunchInTTY | lldb::eLaunchFlagCloseTTYOnExit;
   const bool detatchOnError = GetBoolean(arguments, "detachOnError", false);
   g_vsc.launch_info.SetDetachOnError(detatchOnError);
   g_vsc.launch_info.SetLaunchFlags(flags | lldb::eLaunchFlagDebug |
