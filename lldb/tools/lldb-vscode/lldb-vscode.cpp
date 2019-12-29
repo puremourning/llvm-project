@@ -1716,10 +1716,16 @@ void request_launch(const llvm::json::Object &request) {
     flags |= lldb::eLaunchFlagDisableSTDIO;
   if (GetBoolean(arguments, "shellExpandArguments", false))
     flags |= lldb::eLaunchFlagShellExpandArguments;
+
+  if (GetBoolean(arguments, "externalConsole", false ))
+    flags |= lldb::eLaunchFlagLaunchInTTY | lldb::eLaunchFlagCloseTTYOnExit;
+
+  if (GetBoolean(arguments, "stopAtEntry", false ))
+    flags |= lldb::eLaunchFlagStopAtEntry;
+
   const bool detatchOnError = GetBoolean(arguments, "detachOnError", false);
   launch_info.SetDetachOnError(detatchOnError);
-  launch_info.SetLaunchFlags(flags | lldb::eLaunchFlagDebug |
-                             lldb::eLaunchFlagStopAtEntry);
+  launch_info.SetLaunchFlags(flags | lldb::eLaunchFlagDebug);
 
   // Run any pre run LLDB commands the user specified in the launch.json
   g_vsc.RunPreRunCommands();
