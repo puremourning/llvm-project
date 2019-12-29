@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+cmake -G Ninja -DLLVM_ENABLE_ASSERTIONS=ON \
+               -DCMAKE_EXPORT_COMPILE_COMMANDS=ON  \
+               -DBUILD_SHARED_LIBS=OFF \
+               -DLLVM_BUILD_LLVM_DYLIB=ON \
+               -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+               -DLLDB_EXPORT_ALL_SYMBOLS=1 \
+               -DLLVM_ENABLE_PROJECTS='clang;clang-tools-extra;libcxxabi;libcxx;lldb' \
+               -DCMAKE_INSTALL_PREFIX=/Users/ben/Development/llvm-project/root \
+               -DLLVM_OPTIMIZED_TABLEGEN=ON \
+               -DLLDB_BUILD_FRAMEWORK=ON \
+               ../llvm/
+
+# vim: tw=

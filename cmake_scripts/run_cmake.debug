@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+cmake -G Ninja \
+      -DLLVM_ENABLE_ASSERTIONS=ON  \
+      -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
+      -DBUILD_SHARED_LIBS=ON \
+      -DCMAKE_BUILD_TYPE=Debug  \
+      -DLLDB_EXPORT_ALL_SYMBOLS=1 \
+      -DLLVM_ENABLE_PROJECTS='clang;clang-tools-extra;lldb;libcxx' \
+      -DLLDB_BUILD_FRAMEWORK=ON \
+      -DCMAKE_INSTALL_PREFIX=/Users/ben/Development/llvm-project/root  \
+      -DLLVM_OPTIMIZED_TABLEGEN=ON  \
+      ../llvm/
