@@ -9,7 +9,11 @@ cmake -G Ninja -DLLVM_ENABLE_ASSERTIONS=ON \
                -DLLVM_ENABLE_PROJECTS='clang;clang-tools-extra;libcxxabi;libcxx;lldb' \
                -DCMAKE_INSTALL_PREFIX=/Users/ben/Development/llvm-project/root \
                -DLLVM_OPTIMIZED_TABLEGEN=ON \
-               -DLLDB_BUILD_FRAMEWORK=ON \
+               -DLLVM_CCACHE_BUILD=ON \
+               -DLLVM_CCACHE_MAXSIZE=50GB \
+               -DLLVM_CCACHE_DIR=../cache \
+               -DLLVM_CCACHE_PARAMS='\
+                   CCACHE_CPP2=yes \
+                   CCACHE_HASHDIR=yes \
+                   CCACHE_BASEDIR=/Users/ben/Development/llvm-project' \
                ../llvm/
-
-# vim: tw=
