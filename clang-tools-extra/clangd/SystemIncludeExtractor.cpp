@@ -62,6 +62,7 @@ namespace {
 
 struct DriverInfo {
   std::vector<std::string> SystemIncludes;
+  std::vector<std::string> SystemFrameworkIncludes;
   std::string Target;
 };
 
@@ -80,6 +81,7 @@ std::optional<DriverInfo> parseDriverOutput(llvm::StringRef Output) {
   const char SIS[] = "#include <...> search starts here:";
   const char SIE[] = "End of search list.";
   const char TS[] = "Target: ";
+  const char FD[] = "(framework directory)";
   llvm::SmallVector<llvm::StringRef> Lines;
   Output.split(Lines, '\n', /*MaxSplit=*/-1, /*KeepEmpty=*/false);
 
@@ -115,6 +117,10 @@ std::optional<DriverInfo> parseDriverOutput(llvm::StringRef Output) {
     case IncludesExtracting:
       if (Line.trim() == SIE) {
         State = SeenTarget ? Done : Initial;
+      } else if (Line.endswith(FD)) {
+        const auto &P = Line.drop_back(strlen(FD)).trim().str();
+        Info.SystemFrameworkIncludes.push_back(P);
+        vlog("System include extraction: adding framework dir {0}", P);
       } else {
         Info.SystemIncludes.push_back(Line.trim().str());
         vlog("System include extraction: adding {0}", Line);
@@ -164,6 +170,8 @@ extractSystemIncludesAndTarget(llvm::SmallString<128> Driver,
     vlog("System include extraction: not allowed driver {0}", Driver);
     return std::nullopt;
   }
+
+  vlog("System include extraction: querying driver {0}", Driver);
 
   llvm::SmallString<128> StdErrPath;
   if (auto EC = llvm::sys::fs::createTemporaryFile("system-includes", "clangd",
